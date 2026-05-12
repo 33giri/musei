@@ -17,13 +17,15 @@
         .border-trentino-red { border-color: #E30613; }
         .text-eco-green { color: #228B22; }
         .bg-eco-green { background-color: #228B22; }
- 
+
         /* ── HERO con immagine di sfondo ── */
         .hero-section {
             position: relative;
             overflow: hidden;
             border-bottom: 4px solid #E30613;
-            padding: 5rem 1rem;
+            min-height: 620px;
+            display: flex;
+            flex-direction: column;
             text-align: center;
         }
         .hero-bg {
@@ -32,10 +34,9 @@
             background-image: url('7172.jpg');
             background-size: cover;
             background-position: center;
-            opacity: 0.38;          /* trasparenza foto */
+            opacity: 0.38;
             z-index: 0;
         }
-        /* overlay scuro leggero per migliorare leggibilità */
         .hero-overlay {
             position: absolute;
             inset: 0;
@@ -47,8 +48,49 @@
             z-index: 2;
             max-width: 56rem;
             margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
- 
+
+        /* slot logo in cima */
+        .hero-logo-slot {
+            padding: 2rem 1rem 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo-placeholder {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 3px dashed rgba(227,6,19,0.5);
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: #E30613;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+        }
+        .logo-placeholder svg {
+            opacity: 0.6;
+        }
+
+        /* testo + badge nella parte bassa dell'hero */
+        .hero-text-block {
+            padding: 2.5rem 1rem 3.5rem;
+            margin-top: auto;
+        }
+
         /* ── EFFETTO RILIEVO / EMBOSS sulle scritte ── */
         .emboss-title {
             color: #C0000E;
@@ -84,7 +126,7 @@
         .emboss-badge-strike {
             text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
         }
- 
+
         /* ── Timeline ── */
         .map-timeline {
             position: relative;
@@ -102,7 +144,7 @@
             border: 4px solid #fcfcf5;
         }
         .shuttle-node { background-color: #228B22; }
- 
+
         /* ── Charts ── */
         .chart-wrapper {
             position: relative;
@@ -113,7 +155,7 @@
             max-height: 450px;
             min-height: 300px;
         }
- 
+
         /* ── QR placeholder ── */
         .qr-placeholder {
             display: grid;
@@ -130,30 +172,40 @@
     </style>
 </head>
 <body class="antialiased">
- 
+
     <!-- ══════════════ HERO ══════════════ -->
     <header class="hero-section">
         <div class="hero-bg"></div>
         <div class="hero-overlay"></div>
- 
+
         <div class="hero-content">
-            <h1 class="emboss-title text-5xl md:text-7xl font-extrabold mb-4 uppercase leading-tight">
-                4 Musei,<br>Un solo percorso.
-            </h1>
-            <p class="emboss-sub text-xl md:text-3xl font-light mb-8">
-                La cultura in Trentino non è mai stata così vicina.
-            </p>
-            <div class="inline-block bg-trentino-red text-white rounded-full px-8 py-6 shadow-2xl transform transition hover:scale-105">
-                <span class="emboss-badge-label block text-sm uppercase tracking-widest mb-1">Il tuo pass per la bellezza</span>
-                <span class="emboss-badge-price block text-6xl font-bold">€ 27,00</span>
-                <span class="emboss-badge-strike block text-lg opacity-80 line-through mt-1">Invece di € 36,00</span>
+
+            <!-- SLOT LOGO PROVINCIA (in cima all'hero, sopra l'immagine) -->
+            <div class="hero-logo-slot">
+                <img src="provincia-autonoma-di-trento-logo-vector.png" style="width:130px; height:auto;">
             </div>
+
+            <!-- TITOLO + BADGE in basso -->
+            <div class="hero-text-block">
+                <h1 class="emboss-title text-5xl md:text-7xl font-extrabold mb-4 uppercase leading-tight">
+                    4 Musei,<br>Un solo percorso.
+                </h1>
+                <p class="emboss-sub text-xl md:text-3xl font-light mb-8">
+                    La cultura in Trentino non è mai stata così vicina.
+                </p>
+                <div class="inline-block bg-trentino-red text-white rounded-full px-8 py-6 shadow-2xl transform transition hover:scale-105">
+                    <span class="emboss-badge-label block text-sm uppercase tracking-widest mb-1">Il tuo pass per la bellezza</span>
+                    <span class="emboss-badge-price block text-6xl font-bold">€ 27,00</span>
+                    <span class="emboss-badge-strike block text-lg opacity-80 line-through mt-1">Invece di € 36,00</span>
+                </div>
+            </div>
+
         </div>
     </header>
- 
+
     <!-- ══════════════ MAIN ══════════════ -->
     <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
- 
+
         <section class="mb-20">
             <h2 class="text-3xl font-bold text-gray-900 border-b-2 border-trentino-red inline-block mb-6 pb-2">Il Valore della Cultura</h2>
             <p class="text-lg text-gray-700 mb-8 max-w-3xl">
@@ -166,13 +218,13 @@
                 </div>
             </div>
         </section>
- 
+
         <section class="mb-20">
             <h2 class="text-3xl font-bold text-gray-900 border-b-2 border-trentino-red inline-block mb-6 pb-2">La Mappa del Percorso</h2>
             <p class="text-lg text-gray-700 mb-8 max-w-3xl">
                 Esplora il cuore pulsante del territorio. Dalle vette della scienza alla storia medievale, fino all'avanguardia dell'arte moderna. Un viaggio fluido lungo l'asse dell'Adige, pensato per chi ama scoprire senza fretta.
             </p>
- 
+
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div class="bg-white p-8 rounded-2xl shadow-lg">
                     <div class="map-timeline pb-8">
@@ -205,7 +257,7 @@
                         </div>
                     </div>
                 </div>
- 
+
                 <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
                     <h3 class="text-xl font-bold text-center mb-6">Profili Culturali a Confronto</h3>
                     <p class="text-sm text-gray-600 text-center mb-4">Ogni museo offre un'esperienza unica. Scopri le vocazioni specifiche di ciascuna tappa del tuo viaggio.</p>
@@ -215,7 +267,7 @@
                 </div>
             </div>
         </section>
- 
+
         <section class="mb-12">
             <div class="bg-eco-green rounded-3xl shadow-xl overflow-hidden text-white flex flex-col md:flex-row">
                 <div class="p-10 md:w-2/3 flex flex-col justify-center">
@@ -244,9 +296,9 @@
                 </div>
             </div>
         </section>
- 
+
     </main>
- 
+
     <!-- ══════════════ FOOTER ══════════════ -->
     <footer class="bg-gray-900 text-white pt-16 pb-8 border-t-8 border-trentino-red">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -282,7 +334,7 @@
             &copy; 2026 Il Grande Giro dei Musei Trentino. Progetto Infografico.
         </div>
     </footer>
- 
+
     <script>
         function wrapLabels(labels) {
             return labels.map(function(label) {
@@ -303,7 +355,7 @@
                 return label;
             });
         }
- 
+
         var tooltipConfig = {
             callbacks: {
                 title: function(tooltipItems) {
@@ -313,7 +365,7 @@
                 }
             }
         };
- 
+
         var ctxPrice = document.getElementById('priceChart').getContext('2d');
         new Chart(ctxPrice, {
             type: 'bar',
@@ -337,7 +389,7 @@
                 }
             }
         });
- 
+
         var ctxRadar = document.getElementById('radarChart').getContext('2d');
         new Chart(ctxRadar, {
             type: 'radar',
