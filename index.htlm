@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il Grande Giro dei Musei - Infografica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #fcfcf5;
+            color: #333333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .text-trentino-red {
+            color: #E30613;
+        }
+        .bg-trentino-red {
+            background-color: #E30613;
+        }
+        .border-trentino-red {
+            border-color: #E30613;
+        }
+        .text-eco-green {
+            color: #228B22;
+        }
+        .bg-eco-green {
+            background-color: #228B22;
+        }
+        .map-timeline {
+            position: relative;
+            padding-left: 2rem;
+            border-left: 4px dashed #E30613;
+            margin-left: 1rem;
+        }
+        .map-node {
+            position: absolute;
+            left: -1rem;
+            width: 1.75rem;
+            height: 1.75rem;
+            border-radius: 50%;
+            background-color: #E30613;
+            border: 4px solid #fcfcf5;
+        }
+        .shuttle-node {
+            background-color: #228B22;
+        }
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 60vh;
+            max-height: 450px;
+            min-height: 300px;
+        }
+        .qr-placeholder {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            width: 80px;
+            height: 80px;
+            background: white;
+            padding: 4px;
+            border: 2px solid #333;
+        }
+        .qr-block {
+            background-color: #333;
+        }
+        .qr-block:nth-child(even) {
+            background-color: white;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="metadata" class="hidden" style="display:none;">
+        Palette confermata: Vibrant Alpine (Crema #fcfcf5, Rosso #E30613, Verde #228B22, Grigio Scuro #333333).
+        Conferma restrizioni: NESSUN file SVG utilizzato. NESSUNA libreria Mermaid JS utilizzata. NESSUN commento nel codice sorgente inserito a livello sintattico.
+        Piano narrativo: 
+        1. Hook con Titolo e Valore Economico (Bar Chart per evidenziare il risparmio).
+        2. Esplorazione del Percorso (Timeline verticale con CSS).
+        3. Identità dei Musei (Radar Chart per comparare i focus culturali).
+        4. Sostenibilità (Dati d'impatto della navetta ecosostenibile).
+    </div>
+
+    <header class="bg-white shadow-md border-b-4 border-trentino-red py-12 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none text-[20rem] font-bold leading-none select-none">
+            M A P
+        </div>
+        <div class="max-w-4xl mx-auto relative z-10">
+            <h1 class="text-5xl md:text-7xl font-extrabold text-trentino-red tracking-tight mb-4 uppercase">
+                4 Musei,<br>Un solo percorso.
+            </h1>
+            <p class="text-xl md:text-3xl font-light text-gray-700 mb-8">
+                La cultura in Trentino non è mai stata così vicina.
+            </p>
+            <div class="inline-block bg-trentino-red text-white rounded-full px-8 py-6 shadow-xl transform transition hover:scale-105">
+                <span class="block text-sm uppercase tracking-widest mb-1">Il tuo pass per la bellezza</span>
+                <span class="block text-6xl font-bold">€ 27,00</span>
+                <span class="block text-lg opacity-80 line-through mt-1">Invece di € 36,00</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold text-gray-900 border-b-2 border-trentino-red inline-block mb-6 pb-2">Il Valore della Cultura</h2>
+            <p class="text-lg text-gray-700 mb-8 max-w-3xl">
+                L'iniziativa "Il Grande Giro dei Musei" abbatte le barriere economiche, offrendo un biglietto integrato unico. Il grafico sottostante illustra chiaramente il risparmio immediato per il visitatore, incentivando la permanenza sul territorio e la fruizione di tutti e quattro i poli culturali.
+            </p>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                <h3 class="text-xl font-bold text-center mb-6">Comparazione Costi: Singoli vs Pass Integrato</h3>
+                <div class="chart-wrapper">
+                    <canvas id="priceChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20">
+            <h2 class="text-3xl font-bold text-gray-900 border-b-2 border-trentino-red inline-block mb-6 pb-2">La Mappa del Percorso</h2>
+            <p class="text-lg text-gray-700 mb-8 max-w-3xl">
+                Esplora il cuore pulsante del territorio. Dalle vette della scienza alla storia medievale, fino all'avanguardia dell'arte moderna. Un viaggio fluido lungo l'asse dell'Adige, pensato per chi ama scoprire senza fretta.
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="map-timeline pb-8">
+                        <div class="map-node top-0"></div>
+                        <h4 class="text-2xl font-bold text-trentino-red mb-2">TRENTO</h4>
+                        <div class="mb-6 bg-gray-50 p-4 rounded-lg border border-gray-100">
+                            <h5 class="font-bold text-lg">🏛️ MUSE</h5>
+                            <p class="text-sm text-gray-600 mb-3">Dove la natura diventa futuro. Un'architettura che richiama le vette alpine.</p>
+                            <h5 class="font-bold text-lg">🏰 Castello del Buonconsiglio</h5>
+                            <p class="text-sm text-gray-600">Il fascino della storia scolpito nella roccia. L'antica residenza dei Principi Vescovi.</p>
+                        </div>
+                    </div>
+
+                    <div class="map-timeline pb-8 border-eco-green">
+                        <div class="map-node shuttle-node top-0"></div>
+                        <div class="bg-eco-green text-white p-4 rounded-lg shadow-md transform -translate-y-2">
+                            <h5 class="font-bold flex items-center gap-2">
+                                <span>⚡</span> NAVETTA ELETTRICA GRATUITA
+                            </h5>
+                            <p class="text-sm mt-1">Connessione rapida e a zero emissioni lungo la linea rossa per i possessori del biglietto integrato.</p>
+                        </div>
+                    </div>
+
+                    <div class="map-timeline border-transparent">
+                        <div class="map-node top-0"></div>
+                        <h4 class="text-2xl font-bold text-trentino-red mb-2">ROVERETO</h4>
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                            <h5 class="font-bold text-lg">🖼️ MART</h5>
+                            <p class="text-sm text-gray-600 mb-3">L'emozione dell'arte contemporanea sotto la grande cupola di Mario Botta.</p>
+                            <h5 class="font-bold text-lg">🛡️ Castel Beseno</h5>
+                            <p class="text-sm text-gray-600">La sentinella della Valle tra mura e leggende, dominando la Vallagarina.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                    <h3 class="text-xl font-bold text-center mb-6">Profili Culturali a Confronto</h3>
+                    <p class="text-sm text-gray-600 text-center mb-4">Ogni museo offre un'esperienza unica. Scopri le vocazioni specifiche di ciascuna tappa del tuo viaggio.</p>
+                    <div class="chart-wrapper">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <div class="bg-eco-green rounded-3xl shadow-xl overflow-hidden text-white flex flex-col md:flex-row">
+                <div class="p-10 md:w-2/3 flex flex-col justify-center">
+                    <h2 class="text-4xl font-black mb-4 flex items-center gap-3">
+                        <span>MUOVITI GREEN</span> <span>⚡</span>
+                    </h2>
+                    <h3 class="text-2xl font-semibold mb-6">Viaggia Gratis.</h3>
+                    <p class="text-lg opacity-90 mb-6">
+                        Non pensare al parcheggio, ci pensiamo noi. Il tuo pass include l'accesso illimitato alla nostra navetta elettrica dedicata, che collega regolarmente Trento e Rovereto. Più comodo per te, vitale per le nostre montagne.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white bg-opacity-20 rounded-lg p-4 text-center">
+                            <span class="block text-3xl font-bold">100%</span>
+                            <span class="block text-sm uppercase mt-1">Elettrico</span>
+                        </div>
+                        <div class="bg-white bg-opacity-20 rounded-lg p-4 text-center">
+                            <span class="block text-3xl font-bold">-15kg</span>
+                            <span class="block text-sm uppercase mt-1">CO2 risparmiata a viaggio</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/3 bg-[#1e7a1e] p-10 flex items-center justify-center">
+                    <div class="text-center">
+                        <img src="Trentino-Trasporti.png" alt="Trentino Trasporti" class="max-w-full h-auto rounded-lg shadow-md">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-900 text-white pt-16 pb-8 border-t-8 border-trentino-red">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-12">
+            
+            <div>
+                <h4 class="text-2xl font-bold mb-4">Inizia il tuo viaggio</h4>
+                <p class="text-gray-400 mb-6">Acquista il pass unico presso le biglietterie dei 4 musei oppure prenota comodamente online per saltare la coda.</p>
+                <button class="bg-trentino-red hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition">
+                    Acquista Ora [SitoWeb.it]
+                </button>
+            </div>
+
+            <div>
+                <h4 class="text-xl font-bold mb-4">Orari Navetta</h4>
+                <p class="text-gray-400 mb-4">Inquadra il codice per visualizzare la mappa live del percorso e gli orari aggiornati della navetta elettrica gratuita.</p>
+                <div class="qr-placeholder mx-auto md:mx-0">
+                    <div class="qr-block"></div><div class="qr-block"></div><div class="qr-block"></div><div class="qr-block"></div>
+                    <div class="qr-block"></div><div class="qr-block"></div><div class="qr-block"></div><div class="qr-block"></div>
+                    <div class="qr-block"></div><div class="qr-block"></div><div class="qr-block"></div><div class="qr-block"></div>
+                    <div class="qr-block"></div><div class="qr-block"></div><div class="qr-block"></div><div class="qr-block"></div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-xl font-bold mb-4">Partner dell'Iniziativa</h4>
+                <div class="flex flex-col gap-3 text-gray-400">
+                    <span class="font-semibold text-white">Provincia Autonoma di Trento</span>
+                    <span>MUSE - Museo delle Scienze</span>
+                    <span>Castello del Buonconsiglio</span>
+                    <span>MART - Museo di Arte Moderna</span>
+                    <span>Castel Beseno</span>
+                </div>
+            </div>
+
+        </div>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 pt-8 border-t border-gray-800 text-center text-sm text-gray-500">
+            &copy; 2026 Il Grande Giro dei Musei Trentino. Progetto Infografico.
+        </div>
+    </footer>
+
+    <script>
+        function wrapLabels(labels) {
+            return labels.map(function(label) {
+                if (label.length > 16) {
+                    var words = label.split(' ');
+                    var lines = [];
+                    var currentLine = '';
+                    words.forEach(function(word) {
+                        if ((currentLine + word).length > 16) {
+                            if (currentLine) {
+                                lines.push(currentLine.trim());
+                            }
+                            currentLine = word + ' ';
+                        } else {
+                            currentLine += word + ' ';
+                        }
+                    });
+                    if (currentLine) {
+                        lines.push(currentLine.trim());
+                    }
+                    return lines;
+                }
+                return label;
+            });
+        }
+
+        var tooltipConfig = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    var item = tooltipItems[0];
+                    var label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            }
+        };
+
+        var rawPriceLabels = ['Acquisto Singolo Separato', 'Pass Il Grande Giro'];
+        var priceLabels = wrapLabels(rawPriceLabels);
+
+        var ctxPrice = document.getElementById('priceChart').getContext('2d');
+        new Chart(ctxPrice, {
+            type: 'bar',
+            data: {
+                labels: priceLabels,
+                datasets: [{
+                    label: 'Costo Totale (€)',
+                    data: [36, 27],
+                    backgroundColor: [
+                        '#9CA3AF',
+                        '#E30613' 
+                    ],
+                    borderRadius: 8,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: tooltipConfig
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#e5e7eb'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return '€ ' + value;
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        var rawRadarLabels = [
+            'Scienza ed Ecosistemi Naturali',
+            'Architettura Monumentale',
+            'Storia ed Età Medievale',
+            'Arte Moderna e Contemporanea',
+            'Panorama e Punti di Osservazione'
+        ];
+        var radarLabels = wrapLabels(rawRadarLabels);
+
+        var ctxRadar = document.getElementById('radarChart').getContext('2d');
+        new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: radarLabels,
+                datasets: [
+                    {
+                        label: 'MUSE',
+                        data: [100, 60, 10, 20, 50],
+                        backgroundColor: 'rgba(34, 139, 34, 0.2)',
+                        borderColor: '#228B22',
+                        pointBackgroundColor: '#228B22',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Buonconsiglio',
+                        data: [10, 80, 100, 30, 70],
+                        backgroundColor: 'rgba(227, 6, 19, 0.2)',
+                        borderColor: '#E30613',
+                        pointBackgroundColor: '#E30613',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'MART',
+                        data: [5, 90, 5, 100, 40],
+                        backgroundColor: 'rgba(69, 123, 157, 0.2)',
+                        borderColor: '#457b9d',
+                        pointBackgroundColor: '#457b9d',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Castel Beseno',
+                        data: [30, 70, 90, 0, 100],
+                        backgroundColor: 'rgba(245, 158, 11, 0.2)',
+                        borderColor: '#f59e0b',
+                        pointBackgroundColor: '#f59e0b',
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    tooltip: tooltipConfig,
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            boxWidth: 12,
+                            padding: 15
+                        }
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        pointLabels: {
+                            font: {
+                                size: 11
+                            }
+                        },
+                        ticks: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
