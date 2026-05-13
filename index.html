@@ -95,13 +95,9 @@
         .emboss-title {
             color: #C0000E;
             text-shadow:
-                /* luce in alto a sinistra */
                 -2px -2px 0px rgba(255,255,255,0.85),
-                /* ombra in basso a destra */
                  3px  3px 6px rgba(0,0,0,0.45),
-                /* bordo netto */
                  1px  1px 0px rgba(100,0,5,0.6),
-                /* diffusione morbida */
                  0px  4px 12px rgba(0,0,0,0.25);
             letter-spacing: -0.02em;
         }
@@ -143,7 +139,30 @@
             background-color: #E30613;
             border: 4px solid #fcfcf5;
         }
-        .shuttle-node { background-color: #228B22; }
+
+        /* ── Logo museo inline ── */
+        .museo-logo-slot {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 2px dashed rgba(227,6,19,0.4);
+            background: rgba(250,250,245,0.8);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+        }
+        .museo-logo-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .museo-logo-slot .placeholder-icon {
+            font-size: 18px;
+            opacity: 0.4;
+        }
 
         /* ── Charts ── */
         .chart-wrapper {
@@ -180,12 +199,12 @@
 
         <div class="hero-content">
 
-            <!-- SLOT LOGO PROVINCIA (in cima all'hero, sopra l'immagine) -->
+            <!-- SLOT LOGO PROVINCIA -->
             <div class="hero-logo-slot">
                 <img src="provincia-autonoma-di-trento-logo-vector.png" style="width:130px; height:auto;">
             </div>
 
-            <!-- TITOLO + BADGE in basso -->
+            <!-- TITOLO + BADGE -->
             <div class="hero-text-block">
                 <h1 class="emboss-title text-5xl md:text-7xl font-extrabold mb-4 uppercase leading-tight">
                     4 Musei,<br>Un solo percorso.
@@ -195,8 +214,8 @@
                 </p>
                 <div class="inline-block bg-trentino-red text-white rounded-full px-8 py-6 shadow-2xl transform transition hover:scale-105">
                     <span class="emboss-badge-label block text-sm uppercase tracking-widest mb-1">Il tuo pass per la bellezza</span>
-                    <span class="emboss-badge-price block text-6xl font-bold">€ 27,00</span>
-                    <span class="emboss-badge-strike block text-lg opacity-80 line-through mt-1">Invece di € 36,00</span>
+                    <span class="emboss-badge-price block text-6xl font-bold">€ 29,00</span>
+                    <span class="emboss-badge-strike block text-lg opacity-80 line-through mt-1">Invece di € 42,00</span>
                 </div>
             </div>
 
@@ -227,35 +246,72 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div class="bg-white p-8 rounded-2xl shadow-lg">
+
+                    <!-- TRENTO -->
                     <div class="map-timeline pb-8">
                         <div class="map-node top-0"></div>
-                        <h4 class="text-2xl font-bold text-trentino-red mb-2">TRENTO</h4>
-                        <div class="mb-6 bg-gray-50 p-4 rounded-lg border border-gray-100">
-                            <h5 class="font-bold text-lg">🏛️ MUSE</h5>
-                            <p class="text-sm text-gray-600 mb-3">Dove la natura diventa futuro. Un'architettura che richiama le vette alpine.</p>
-                            <h5 class="font-bold text-lg">🏰 Castello del Buonconsiglio</h5>
-                            <p class="text-sm text-gray-600">Il fascino della storia scolpito nella roccia. L'antica residenza dei Principi Vescovi.</p>
+                        <h4 class="text-2xl font-bold text-trentino-red mb-3">TRENTO</h4>
+                        <div class="mb-6 bg-gray-50 p-4 rounded-lg border border-gray-100 flex flex-col gap-4">
+
+                            <!-- MUSE -->
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <div class="museo-logo-slot" title="Logo MUSE">
+                                        <img src="Screenshot 2026-05-12 alle 12.08.44.png" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" alt="Logo MUSE">
+                                        <span class="placeholder-icon" style="display:none;">🏛️</span>
+                                    </div>
+                                    <h5 class="font-bold text-lg">MUSE</h5>
+                                </div>
+                                <p class="text-sm text-gray-600">Dove la natura diventa futuro. Un'architettura che richiama le vette alpine.</p>
+                            </div>
+
+                            <!-- Castello del Buonconsiglio -->
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <div class="museo-logo-slot" title="Logo Castello del Buonconsiglio">
+                                        <img src="Screenshot 2026-05-12 alle 12.09.14.png" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" alt="Logo Buonconsiglio">
+                                        <span class="placeholder-icon" style="display:none;">🏰</span>
+                                    </div>
+                                    <h5 class="font-bold text-lg">Castello del Buonconsiglio</h5>
+                                </div>
+                                <p class="text-sm text-gray-600">Il fascino della storia scolpito nella roccia. L'antica residenza dei Principi Vescovi.</p>
+                            </div>
+
                         </div>
                     </div>
-                    <div class="map-timeline pb-8 border-eco-green">
-                        <div class="map-node shuttle-node top-0"></div>
-                        <div class="bg-eco-green text-white p-4 rounded-lg shadow-md transform -translate-y-2">
-                            <h5 class="font-bold flex items-center gap-2">
-                                <span>⚡</span> NAVETTA ELETTRICA GRATUITA
-                            </h5>
-                            <p class="text-sm mt-1">Connessione rapida e a zero emissioni lungo la linea rossa per i possessori del biglietto integrato.</p>
-                        </div>
-                    </div>
-                    <div class="map-timeline border-transparent">
+
+                    <!-- CASTEL BESENO (tra Trento e Rovereto) -->
+                    <div class="map-timeline pb-8">
                         <div class="map-node top-0"></div>
-                        <h4 class="text-2xl font-bold text-trentino-red mb-2">ROVERETO</h4>
+                        <h4 class="text-2xl font-bold text-trentino-red mb-3">VALLAGARINA</h4>
                         <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
-                            <h5 class="font-bold text-lg">🖼️ MART</h5>
-                            <p class="text-sm text-gray-600 mb-3">L'emozione dell'arte contemporanea sotto la grande cupola di Mario Botta.</p>
-                            <h5 class="font-bold text-lg">🛡️ Castel Beseno</h5>
+                            <div class="flex items-center gap-2 mb-1">
+                                <div class="museo-logo-slot" title="Logo Castel Beseno">
+                                    <img src="Screenshot 2026-05-12 alle 12.09.14.png" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" alt="Logo Castel Beseno">
+                                    <span class="placeholder-icon" style="display:none;">🛡️</span>
+                                </div>
+                                <h5 class="font-bold text-lg">Castel Beseno</h5>
+                            </div>
                             <p class="text-sm text-gray-600">La sentinella della Valle tra mura e leggende, dominando la Vallagarina.</p>
                         </div>
                     </div>
+
+                    <!-- ROVERETO -->
+                    <div class="map-timeline border-transparent">
+                        <div class="map-node top-0"></div>
+                        <h4 class="text-2xl font-bold text-trentino-red mb-3">ROVERETO</h4>
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                            <div class="flex items-center gap-2 mb-1">
+                                <div class="museo-logo-slot" title="Logo MART">
+                                    <img src="Screenshot 2026-05-12 alle 12.08.29.png" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" alt="Logo MART">
+                                    <span class="placeholder-icon" style="display:none;">🖼️</span>
+                                </div>
+                                <h5 class="font-bold text-lg">MART</h5>
+                            </div>
+                            <p class="text-sm text-gray-600">L'emozione dell'arte contemporanea sotto la grande cupola di Mario Botta.</p>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
@@ -325,8 +381,8 @@
                     <span class="font-semibold text-white">Provincia Autonoma di Trento</span>
                     <span>MUSE - Museo delle Scienze</span>
                     <span>Castello del Buonconsiglio</span>
-                    <span>MART - Museo di Arte Moderna</span>
                     <span>Castel Beseno</span>
+                    <span>MART - Museo di Arte Moderna</span>
                 </div>
             </div>
         </div>
@@ -373,7 +429,7 @@
                 labels: wrapLabels(['Acquisto Singolo Separato', 'Pass Il Grande Giro']),
                 datasets: [{
                     label: 'Costo Totale (€)',
-                    data: [36, 27],
+                    data: [42, 29],
                     backgroundColor: ['#9CA3AF', '#E30613'],
                     borderRadius: 8,
                     borderWidth: 0
